@@ -8,3 +8,5 @@ class horse(dbBaseClass):
     horse_id = Column(Integer, primary_key=True, index=True)
     horse_name = Column(String, unique=True, index=True)
 
+class horseFull(horse):
+    coat = Column(Integer)
