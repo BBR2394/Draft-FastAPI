@@ -5,7 +5,7 @@ from fastapi import FastAPI, Depends
 from pydantic import BaseModel
 
 # ll
-from .routers import deux, bddrouter
+from .routers import deux, bddrouter, user_route
 from .database import horse_mdl
 from .database import database
 from .database import crud
@@ -16,7 +16,7 @@ app = FastAPI()
 
 app.include_router(deux.routerDeux)
 app.include_router(bddrouter.routerBDD)
-
+app.include_router(user_route.route_user)
 
 
 class horseBody(BaseModel):
@@ -45,6 +45,10 @@ lstItem = []
 @app.get("/")
 def read_root():
     return {"Hello": "World"}
+
+@app.get('/homeinfo')
+def homeRoute():
+    return '<h1>home page</h1><p>this is juste the home route for our api</p>'
 
 @app.get("/horses")
 def get_all_horses(db: database.dbSessionLocal = Depends(get_db)):

@@ -4,11 +4,12 @@ from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
-SQLALCHEMY_DATABASE_URL = "postgresql://Baptiste:bonjour2394@127.0.0.1/hms"
+SQLALCHEMY_DATABASE_URL = "postgresql://Baptiste:bonjour2394@127.0.0.1/AMP"
 
 dbEngine = create_engine(SQLALCHEMY_DATABASE_URL)
 
 dbSessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=dbEngine)
+
 
 # a base class that our class wil derivate
 dbBaseClass = declarative_base()

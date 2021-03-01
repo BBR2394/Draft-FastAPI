@@ -22,7 +22,7 @@ def add_new_horse(db: Session, newHorseName: str):
     db.refresh(new_horse)
     return new_horse
 
-
+# ma focntion put qui est mal nommée
 def get_one_horse_moreData(db: Session, id: int):
     horse_to_up = db.query(horse_mdl.horseFull).filter(horse_mdl.horse.horse_id == id).first()
     #print(horse_to_up.__getitem__("current_owner"))
