@@ -15,6 +15,25 @@ def get_one_horses(db: Session, id: int):
     #return db.query(models.User).filter(models.User.id == user_id).first()
     return db.query(horse_mdl.horse).filter(horse_mdl.horse.horse_id == id).first()
 
+def add_new_horse(db: Session, newHorseName: str):
+    new_horse = horse_mdl.horse(horse_name=newHorseName)
+    db.add(new_horse)
+    db.commit()
+    db.refresh(new_horse)
+    return new_horse
+
+
+def get_one_horse_moreData(db: Session, id: int):
+    horse_to_up = db.query(horse_mdl.horseFull).filter(horse_mdl.horse.horse_id == id).first()
+    #print(horse_to_up.__getitem__("current_owner"))
+    print(horse_to_up)
+    horse_to_up.horse_name = "Foo bar"
+    print(horse_to_up)
+    db.commit()
+    horse_updated = db.query(horse_mdl.horseFull).filter(horse_mdl.horse.horse_id == id).first()
+    return horse_updated
+
+
 def del_one_horse(db: Session, id: int):
     horse_to_delete = db.query(horse_mdl.horse).filter(horse_mdl.horse.horse_id == id).first()
     db.delete(horse_to_delete)

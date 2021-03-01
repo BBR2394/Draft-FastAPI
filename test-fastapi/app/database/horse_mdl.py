@@ -10,3 +10,4 @@ class horse(dbBaseClass):
 
 class horseFull(horse):
     coat = Column(Integer)
+    current_owner = Column(Integer)

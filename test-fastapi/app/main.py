@@ -54,21 +54,32 @@ def get_all_horses(db: database.dbSessionLocal = Depends(get_db)):
         print(i)
     return horses
 
+
 def test(name: str):
     return "bonjour II"
 
+
 @app.post("/horses")
-def add_horse(bdy: horseBody, db: database.dbSessionLocal = Depends(get_db)):
+def get_one_horse_with_id(bdy: horseBody, db: database.dbSessionLocal = Depends(get_db)):
     print(bdy)
     print(bdy.id)
     horses = crud.get_one_horses(db, bdy.id)
     return horses
 
+@app.post("/newhorse")
+def add_new_horse(bdy: horseBody, db: database.dbSessionLocal = Depends(get_db)):
+    print(bdy)
+    print(bdy.name)
+    new_horse = crud.add_new_horse(db, bdy.name)
+    return new_horse
+
 @app.put("/horse")
 def update_horse(bdy: horseBody, db: database.dbSessionLocal = Depends(get_db)):
     print(bdy)
     print(bdy.id)
-    return {"message": "put horse"}
+    horse_updated = crud.get_one_horse_moreData(db, bdy.id)
+    return horse_updated
+
 
 @app.delete("/horse")
 def delete_one_horse(bdy: horseBody, db: database.dbSessionLocal = Depends(get_db)):
@@ -76,6 +87,7 @@ def delete_one_horse(bdy: horseBody, db: database.dbSessionLocal = Depends(get_d
     print(bdy.id)
     horse_deleted = crud.del_one_horse(db, bdy.id)
     return horse_deleted
+
 
 @app.get("/print")
 def printItem():
