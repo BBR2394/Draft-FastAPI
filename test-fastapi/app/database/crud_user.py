@@ -2,6 +2,9 @@ from sqlalchemy.orm import Session
 
 from . import mdl
 
+def get_all_group(dbSession: Session, skip: int = 0, limit: int = 100):
+    return dbSession.query(mdl.Group).offset(skip).limit(limit).all()
+
 def get_all_user(dbSession: Session, skip: int = 0, limit: int = 100):
     return dbSession.query(mdl.User).offset(skip).limit(limit).all()
 

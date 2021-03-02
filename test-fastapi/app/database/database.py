@@ -25,5 +25,13 @@ def get_db():
         db.close()
 
 
+# it is calle by function Depend from fast api
+def get_db_session():
+    db = database.dbSessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
+
 if __name__ == "__main__":
     print("bonjour")

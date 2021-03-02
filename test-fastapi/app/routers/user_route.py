@@ -1,10 +1,13 @@
 from fastapi import APIRouter, Depends
+from fastapi.responses import FileResponse
 from sqlalchemy.orm import Session
 
 from typing import Optional
 from pydantic import BaseModel
 
-from ..database import database, crud_user
+
+from ..database import database, crud_user, crud_generic
+from ..database import mdl
 
 # j'ai nommé mon router : deux
 route_user = APIRouter(
@@ -20,7 +23,14 @@ class userBody(BaseModel):
     last_name: Optional[str]
     first_name: Optional[str]
     username: Optional[str]
+    group_name: Optional[str]
+    items: Optional[str]
     moreInfo: bool
+    nomdugroupe: Optional[str]
+
+class group(BaseModel):
+    id: Optional[int]
+    type: Optional[str]
 
 # it is calle by function Depend from fast api
 def get_db_session():
@@ -48,7 +58,24 @@ def get_al_users(id: int = -1, alldata: int=0, db: Session = Depends(get_db_sess
             all_usr = crud_user.get_one_user_all_data(db, id)
         else:
             all_usr = crud_user.get_one_user(db, id)
+    print(all_usr[0].email)
+    print(all_usr[0].usr)
     return all_usr
+
+@route_user.get("/group")
+def get_all_ugrp(id: int = -1, alldata: int=0, db: Session = Depends(get_db_session)):
+    all_grp = crud_user.get_all_group(db)
+    return all_grp
+
+@route_user.get("/generic")
+def get_al_users(id: int = -1, alldata: int=0, db: Session = Depends(get_db_session)):
+    all_usr = crud_generic.get_all_data(db, mdl.User)
+    return all_usr
+
+@route_user.get("/doc")
+def return_file_html():
+    index = "app/views/index.html"
+    return FileResponse(index)
 
 #@route_user.get()
 #def get_al_users():

@@ -10,8 +10,11 @@ class User(database.dbBaseClass):
     email = Column(String, unique=True, index=True)
 
     fk_group = Column(Integer, ForeignKey("group.id"))
-    group_name = relationship("Group", foreign_keys=[fk_group])
-    # items = relationship("Item", back_populates="owner")
+
+    nomdugroupe = relationship("Group", foreign_keys=[fk_group])
+    # # fk_group = Column(Integer, ForeignKey('group.id'), autoincrement=True)
+    # group_name = relationship("Group", foreign_keys=[type])
+    usr = relationship("Group", back_populates="group")
 
 
 class UserAllInfo(User):
@@ -22,6 +25,19 @@ class UserAllInfo(User):
 
 class Group(database.dbBaseClass):
     __tablename__ = "group"
+    id = Column(Integer, primary_key=True, index=True)
+    Type = Column(String, unique=True)
+    group = relationship("User", back_populates="usr")
+
+
+class Medicine(database.dbBaseClass):
+    __tablename__ = "medicine"
+    id = Column(Integer, primary_key=True, index=True)
+    name = Column(String, unique=True)
+    dose = Column(Integer)
+
+class Medecine_type(database.dbBaseClass):
+    __tablename__ = "medecine_table"
     id = Column(Integer, primary_key=True, index=True)
     type = Column(String, unique=True)
 
