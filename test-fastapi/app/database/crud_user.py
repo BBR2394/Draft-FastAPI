@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session
 
-from . import mdl
+from .model import mdl
 
 def get_all_group(dbSession: Session, skip: int = 0, limit: int = 100):
     return dbSession.query(mdl.Group).offset(skip).limit(limit).all()

@@ -1,6 +1,6 @@
 from sqlalchemy import Boolean, Column, ForeignKey, Integer, String
 
-from .database import dbBaseClass, dbEngine, dbBaseClass
+from ..database import dbBaseClass, dbEngine, dbBaseClass
 
 
 class horse(dbBaseClass):

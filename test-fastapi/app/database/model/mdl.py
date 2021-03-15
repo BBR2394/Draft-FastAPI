@@ -1,8 +1,8 @@
 from sqlalchemy import Boolean, Column, ForeignKey, Integer, String
 from sqlalchemy.orm import relationship
 
-from ..database import database
-
+#from ..database import database
+from .. import database
 
 class User(database.dbBaseClass):
     __tablename__ = "users"
@@ -30,16 +30,6 @@ class Group(database.dbBaseClass):
     group = relationship("User", back_populates="usr")
 
 
-class Medicine(database.dbBaseClass):
-    __tablename__ = "medicine"
-    id = Column(Integer, primary_key=True, index=True)
-    name = Column(String, unique=True)
-    dose = Column(Integer)
-
-class Medecine_type(database.dbBaseClass):
-    __tablename__ = "medecine_table"
-    id = Column(Integer, primary_key=True, index=True)
-    type = Column(String, unique=True)
 
 # class Item(Base):
 #     __tablename__ = "items"

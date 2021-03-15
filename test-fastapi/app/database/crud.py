@@ -1,7 +1,7 @@
 from sqlalchemy.orm import Session
 
-from . import horse_mdl
-from . import schemas_hms
+from .model import horse_mdl
+from ..schemas import schemas_hms
 
 # def get_horses(db: Session, horse_id: int):
 #    return db.query(model.horse_mdl.horse).filter()

@@ -12,4 +12,5 @@ route_med = APIRouter(
 )
 
 @route_med.get("/")
-def get_all_medicine(id: int = -1, db: Session = Depends(get_db_session))
+def get_all_medicine(id: int = -1, db: Session = Depends(get_db_session)):
+    return {"message":"toto"}   

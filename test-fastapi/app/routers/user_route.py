@@ -5,9 +5,9 @@ from sqlalchemy.orm import Session
 from typing import Optional
 from pydantic import BaseModel
 
-
+from ..schemas import user_schemas
 from ..database import database, crud_user, crud_generic
-from ..database import mdl
+from ..database.model import mdl
 
 # j'ai nommé mon router : deux
 route_user = APIRouter(
@@ -15,22 +15,7 @@ route_user = APIRouter(
     tags=["user"],
 )
 
-# c'est ceci le schema
-class userBody(BaseModel):
-    id: Optional[int]
-    # attention met des chaine vide quand rien n'est donné
-    email: Optional[str] = None
-    last_name: Optional[str]
-    first_name: Optional[str]
-    username: Optional[str]
-    group_name: Optional[str]
-    items: Optional[str]
-    moreInfo: bool
-    nomdugroupe: Optional[str]
 
-class group(BaseModel):
-    id: Optional[int]
-    type: Optional[str]
 
 # it is calle by function Depend from fast api
 def get_db_session():
@@ -58,8 +43,8 @@ def get_al_users(id: int = -1, alldata: int=0, db: Session = Depends(get_db_sess
             all_usr = crud_user.get_one_user_all_data(db, id)
         else:
             all_usr = crud_user.get_one_user(db, id)
-    print(all_usr[0].email)
-    print(all_usr[0].usr)
+#    print(all_usr[0].email)
+    #print(all_usr[0].usr)
     return all_usr
 
 @route_user.get("/group")
@@ -83,7 +68,7 @@ def return_file_html():
 
 
 @route_user.post("/")
-def get_one_users(bdy: userBody, db: Session = Depends(get_db_session)):
+def get_one_users(bdy: user_schemas.userBody, db: Session = Depends(get_db_session)):
     if bdy.moreInfo:
         one_usr = crud_user.get_one_user_all_data(db, bdy.id)
     else:
@@ -93,7 +78,7 @@ def get_one_users(bdy: userBody, db: Session = Depends(get_db_session)):
 
 
 @route_user.put("/")
-def put_one_user(bdy: userBody, db: Session = Depends(get_db_session)):
+def put_one_user(bdy: user_schemas.userBody, db: Session = Depends(get_db_session)):
     print(bdy)
     print(bdy.id)
     user_updated = crud_user.put_a_user_mail(db, bdy.email, bdy.id)
@@ -102,7 +87,7 @@ def put_one_user(bdy: userBody, db: Session = Depends(get_db_session)):
 
 
 @route_user.delete("/")
-def delete_one_user(bdy: userBody, db: Session = Depends(get_db_session)):
+def delete_one_user(bdy: user_schemas.userBody, db: Session = Depends(get_db_session)):
     usr_to_del = crud_user.delete_a_user(db, bdy.id)
 
     return usr_to_del
