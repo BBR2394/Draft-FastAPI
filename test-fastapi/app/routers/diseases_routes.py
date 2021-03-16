@@ -35,16 +35,20 @@ def add_a_disease(body_disease: disease_schemas.baseDisease, db: Session = Depen
 
 
 @diseases_router.put("/")
-def put_disease():
+def put_disease(body_disease: disease_schemas.baseDisease, db: Session = Depends(database.get_db_session)):
+    crudObj.update_disease(db, body_disease)
     return {"message":"in progress"}
 
 
 @diseases_router.patch("/")
-def patch_disease():
+def patch_disease(body_disease: disease_schemas.baseDisease, db: Session = Depends(database.get_db_session)):
+    
+    crudObj.update_disease(db, body_disease)
     return {"message":"in pprogress"}
 
 
 # on va vraiment faire un delete ? en tout cas seul les admins devrait pouvoir le faire non ?
 @diseases_router.post("/")
-def add_a_disease():
+def delete_a_disease(body: disease_schemas.baseDisease, db: Session = Depends(database.get_db_session)):
+
     return {"message":"in pprogress"}

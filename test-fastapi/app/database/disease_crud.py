@@ -20,4 +20,10 @@ class CRUD_disease:
         dbSession.commit()
         dbSession.refresh(new_disease)
         return new_disease
-        #return "test"  
+
+    def update_disease(self, dbSession: Session, data_to_up: disease_model.disease):
+        return "in progress"
+
+    def delete_disease(self, dbSession: Session, id_disease: int):
+        
+        return "in progress"

@@ -15,8 +15,6 @@ route_user = APIRouter(
     tags=["user"],
 )
 
-
-
 # it is calle by function Depend from fast api
 def get_db_session():
     db = database.dbSessionLocal()
@@ -66,7 +64,6 @@ def return_file_html():
 #def get_al_users():
 #    return {"message": "GET one user"}
 
-
 @route_user.post("/")
 def get_one_users(bdy: user_schemas.userBody, db: Session = Depends(get_db_session)):
     if bdy.moreInfo:
@@ -74,7 +71,6 @@ def get_one_users(bdy: user_schemas.userBody, db: Session = Depends(get_db_sessi
     else:
         one_usr = crud_user.get_one_user(db, bdy.id)
     return one_usr
-
 
 
 @route_user.put("/")
