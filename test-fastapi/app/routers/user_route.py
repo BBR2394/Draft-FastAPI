@@ -30,19 +30,26 @@ def testdeuxiemefichier():
 
 
 @route_user.get("/")
-def get_al_users(id: int = -1, alldata: int=0, db: Session = Depends(get_db_session)):
+def get_al_users(id: int = -1, alldata: int = 0, page: int = 0, db: Session = Depends(get_db_session)):
     if id == -1:
         if alldata == 0:
             all_usr = crud_user.get_all_user(db)
         else:
             all_usr = crud_user.get_all_user_all_data(db)
     else:
-        if alldata  == 0:
+        if alldata == 0:
             all_usr = crud_user.get_one_user_all_data(db, id)
         else:
             all_usr = crud_user.get_one_user(db, id)
 #    print(all_usr[0].email)
     #print(all_usr[0].usr)
+    return all_usr
+
+@route_user.get("/pages")
+def get_user_pages(page: int = 0, db: Session = Depends(get_db_session)):
+    print("dans pages ")
+    print(page)
+    all_usr = crud_user.get_all_user_all_data(db, skip=page, limit=1)
     return all_usr
 
 @route_user.get("/group")
@@ -72,6 +79,11 @@ def get_one_users(bdy: user_schemas.userBody, db: Session = Depends(get_db_sessi
         one_usr = crud_user.get_one_user(db, bdy.id)
     return one_usr
 
+@route_user.post("/add")
+def add_a_user(bdy: user_schemas.addUser, db: Session = Depends(get_db_session)):
+    print("dans add user")
+    print(bdy)
+    return "ok"
 
 @route_user.put("/")
 def put_one_user(bdy: user_schemas.userBody, db: Session = Depends(get_db_session)):

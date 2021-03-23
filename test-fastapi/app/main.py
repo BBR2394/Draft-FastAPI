@@ -4,6 +4,8 @@ from fastapi import FastAPI, Depends
 
 from pydantic import BaseModel
 
+from fastapi.middleware.cors import CORSMiddleware
+
 # ll
 from .routers import deux, bddrouter, user_route, medicine_route, diseases_routes
 from .database.model import horse_mdl
@@ -19,6 +21,21 @@ app.include_router(bddrouter.routerBDD)
 app.include_router(user_route.route_user)
 app.include_router(medicine_route.med_route)
 app.include_router(diseases_routes.diseases_router)
+
+origins = [
+    "http://localhost.tiangolo.com",
+    "https://localhost.tiangolo.com",
+    "http://localhost",
+    "http://localhost:8080",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 class horseBody(BaseModel):
     name: Optional[str]

@@ -1,6 +1,9 @@
 from pydantic import BaseModel
 from typing import Optional
 
+class addUser(BaseModel):
+    email: str 
+
 # c'est ceci le schema
 class userBody(BaseModel):
     id: Optional[int]
